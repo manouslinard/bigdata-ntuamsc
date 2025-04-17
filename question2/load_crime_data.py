@@ -4,7 +4,7 @@ from pyspark.sql.types import StructType, StructField, StringType, IntegerType, 
 username = "manousoslinardakis"
 spark = SparkSession \
     .builder \
-    .appName("RDD query 1 execution") \
+    .appName("Save Crime csv to parque") \
     .getOrCreate()
 
 # Set log level
