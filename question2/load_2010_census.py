@@ -13,7 +13,7 @@ job_id = spark.sparkContext.applicationId
 output_dir = f"hdfs://hdfs-namenode:9000/user/{username}/data/parquet/"
 
 census10_schema = StructType([
-    StructField("Zip Code", IntegerType()),
+    StructField("Zip Code", StringType()),
     StructField("Total Population", IntegerType()),
     StructField("Median Age", FloatType()),
     StructField("Total Males", IntegerType()),
