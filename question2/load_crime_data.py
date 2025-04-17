@@ -46,13 +46,25 @@ crime_schema = StructType([
     StructField("LON", FloatType())
 ])
 
-# Load the crime data DataFrame
-crime_df = spark.read.format('csv') \
+# Load the 1st crime data DataFrame
+crime_df1 = spark.read.format('csv') \
     .options(header='true') \
     .schema(crime_schema) \
     .load(f"hdfs://hdfs-namenode:9000/user/root/data/LA_Crime_Data_2010_2019.csv")
 
 # Save as Parquet
-crime_df.write.mode("overwrite").parquet(output_dir)
+crime_df1.write.mode("overwrite").parquet(output_dir+"crime_10_19/")
+
+print(f"Data saved as Parquet to {output_dir}")
+
+
+# Load the 2nd crime data DataFrame
+crime_df2 = spark.read.format('csv') \
+    .options(header='true') \
+    .schema(crime_schema) \
+    .load(f"hdfs://hdfs-namenode:9000/user/root/data/LA_Crime_Data_2020_2025.csv")
+
+# Save as Parquet
+crime_df2.write.mode("overwrite").parquet(output_dir+"crime_20_25/")
 
 print(f"Data saved as Parquet to {output_dir}")
