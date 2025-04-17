@@ -13,12 +13,12 @@ job_id = spark.sparkContext.applicationId
 output_dir = f"hdfs://hdfs-namenode:9000/user/{username}/data/parquet/"
 
 lapd_schema = StructType([
-    StructField("OBJECTID", IntegerType()),
+    StructField("X", FloatType()),
+    StructField("Y", FloatType()),
+    StructField("FID", IntegerType()),
     StructField("DIVISION", StringType()),
     StructField("LOCATION", StringType()),
-    StructField("PREC", IntegerType()),
-    StructField("x", FloatType()),
-    StructField("y", FloatType())
+    StructField("PREC", IntegerType())
 ])
 
 # Load the DataFrame
