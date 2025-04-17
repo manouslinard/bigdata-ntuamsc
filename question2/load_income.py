@@ -16,7 +16,7 @@ output_dir = f"hdfs://hdfs-namenode:9000/user/{username}/data/parquet/"
 lainc_schema = StructType([
     StructField("Zip Code", StringType()),
     StructField("Community", StringType()),
-    StructField("Estimated Median Income", FloatType())
+    StructField("Estimated Median Income", StringType())
 ])
 
 # Load the DataFrame
@@ -27,11 +27,8 @@ lainc = spark.read.format('csv') \
 
 # convert "$x,yz", where "x,yz" money to float xyz:
 lainc = lainc.withColumn(
-    "Estimated Median Income", 
-    col("Estimated Median Income")
-    .cast(StringType())
-    .transform(lambda c: regexp_replace(c, "[$,]", ""))
-    .cast(FloatType())
+    "Estimated Median Income",
+    regexp_replace(col("Estimated Median Income"), "[$,]", "").cast(FloatType())
 )
 
 lainc.show(5)   # shows 5 first rows
