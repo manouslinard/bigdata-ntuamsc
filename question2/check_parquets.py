@@ -12,6 +12,6 @@ folders = ['crime_10_19', 'crime_20_25', 'mo_codes', 'census_10', 'la_income', '
 
 # Check dataframes (5 rows):
 for f in folders:
-    print(f"Checking parquet in folder '{f}':")
     df = spark.read.parquet(parquet_path+f+'/')
+    print(f"Checking parquet in folder '{f}':")
     df.show(5)
