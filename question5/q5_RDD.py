@@ -14,8 +14,7 @@ save_dir = f"hdfs://hdfs-namenode:9000/user/{username}/data/parquet/census_10/"
 df = spark.read.parquet(save_dir)
 rdd_census = df.rdd
 
-save_dir = f"hdfs://hdfs-namenode:9000/user/{username}/data/parquet/la_income/"
-df = spark.read.parquet(save_dir)
+df = spark.read.parquet('data/parquet/la_income/')
 rdd_income = df.rdd
 
 # put the zipcode as key (for join later):

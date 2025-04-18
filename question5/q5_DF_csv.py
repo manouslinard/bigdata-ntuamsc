@@ -61,4 +61,6 @@ median_inc_person = joined_data.withColumn('Median_Income', (col('Estimated Medi
 
 median_inc_person = median_inc_person.select('Zip Code', 'Median_Income')
 
+median_inc_person = median_inc_person.orderBy('Median_Income')
+
 median_inc_person.show(n=median_inc_person.count(), truncate=False)  # shows all.
