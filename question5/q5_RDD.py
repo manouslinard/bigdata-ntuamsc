@@ -31,5 +31,8 @@ joined_data = rdd_census_zipkey.join(rdd_income_zipkey)
 median_inc_person = joined_data.map(lambda x: (x[0], (int(x[1][0][1])*x[1][1])/x[1][0][0]))
 # follows formula: (total_households * median_income_perhouse) / total_population
 
+# final sort for better print:
+median_inc_person = median_inc_person.sortBy(lambda x: x[1])
+
 for item in median_inc_person.coalesce(1).collect():
     print(item)
