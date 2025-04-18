@@ -18,7 +18,7 @@ census10_schema = StructType([
     StructField("Median Age", FloatType()),
     StructField("Total Males", IntegerType()),
     StructField("Total Females", IntegerType()),
-    StructField("Total Households", StringType()),
+    StructField("Total Households", IntegerType()),
     StructField("Average Household Size", FloatType())
 ])
 
