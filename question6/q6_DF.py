@@ -10,11 +10,16 @@ spark = SparkSession \
 spark.sparkContext.setLogLevel("ERROR")
 
 # Get configuration details:
-executor_instances = spark.conf.get("spark.executor.instances", "0")
-executor_cores = spark.conf.get("spark.executor.cores", "0")
-executor_memory = spark.conf.get("spark.executor.memory", "0")
+executor_instances = spark.conf.get("spark.executor.instances", "Not set")
+executor_cores = spark.conf.get("spark.executor.cores", "Not set")
+executor_memory = spark.conf.get("spark.executor.memory", "Not set")
 # if executor_cores != "0" or executor_instances != "0" or executor_memory != "0":
 print(f"Configuration: {executor_instances} executors × {executor_cores} cores/{executor_memory} memory")
+
+sc = spark.sparkContext
+print("\nAll Spark configurations:")
+for key, value in sorted(sc._conf.getAll()):
+    print(f"{key}: {value}")
 
 job_id = spark.sparkContext.applicationId
 
