@@ -5,7 +5,7 @@ from pyspark.sql.types import StructType, StructField, StringType, IntegerType, 
 username = "manousoslinardakis"
 spark = SparkSession \
     .builder \
-    .appName("Query 3 - DF with csv") \
+    .appName("Query 3 - Datframe with csv") \
     .getOrCreate()
 
 spark.sparkContext.setLogLevel("ERROR")

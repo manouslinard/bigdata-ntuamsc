@@ -5,7 +5,7 @@ from pyspark.sql.types import IntegerType
 username = "manousoslinardakis"
 spark = SparkSession \
     .builder \
-    .appName("Query 3 - RDD") \
+    .appName("Query 3 - Datframe with parquet") \
     .getOrCreate()
 
 spark.sparkContext.setLogLevel("ERROR")
