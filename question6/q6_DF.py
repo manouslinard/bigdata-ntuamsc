@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, when, upper, split, explode, sqrt, pow, cos
+from pyspark.sql.functions import col, when, upper, split, explode, sqrt, pow, cos, count, avg
 
 username = "manousoslinardakis"
 spark = SparkSession \
@@ -50,6 +50,7 @@ df_crime = df_crime.filter(~((col("LAT") == 0) & (col("LON") == 0)))
 df_crime = df_crime.withColumn("AREA NAME", upper(col("AREA NAME")))
 
 joined_data = df_crime.join(df_lapd, 'AREA NAME', 'inner')
+joined_data.explain()
 
 # rename columns for better understanding (Latitude -> y, Longitude  -> X):
 joined_data = (joined_data
@@ -66,6 +67,8 @@ df_explode = joined_data.withColumn("Mocode", explode(split("Mocodes", " ")))
 df_mo = spark.read.parquet(f'hdfs://hdfs-namenode:9000/user/{username}/data/parquet/mo_codes/')
 
 joined_data = df_explode.join(df_mo, df_explode.Mocode == df_mo.Code, 'inner')
+joined_data.explain()
+
 # print(f"Number of rows: {joined_data.count()}")
 
 # drops unwanted columns:
@@ -89,23 +92,23 @@ joined_data = joined_data.withColumn(
     )
 )
 
-# Groups calculations:
-grouped_dist = joined_data.groupBy('AREA NAME').avg('Eucl_dist')
-# grouped_dist.show()
-grouped_count = joined_data.groupBy('AREA NAME').count()
-# grouped_count.show()
+# # Groups calculations:
+# grouped_dist = joined_data.groupBy('AREA NAME').avg('Eucl_dist')
+# # grouped_dist.show()
+# grouped_count = joined_data.groupBy('AREA NAME').count()
+# # grouped_count.show()
+#
+# # joins the metrics:
+# grouped = grouped_dist.join(grouped_count, "AREA NAME", 'inner')
+# grouped.explain()
 
-# joins the metrics:
-grouped = grouped_dist.join(grouped_count, "AREA NAME", 'inner')
+grouped = joined_data.groupBy('AREA NAME').agg(
+    avg('Eucl_dist').alias('average_distance'),
+    count('*').alias("#")
+)
 
 # order by count of crime indices (descending):
-grouped = grouped.orderBy('count', ascending=False)
-
-grouped = (grouped
-    .withColumnRenamed("AREA NAME", "division")
-    .withColumnRenamed("avg(Eucl_dist)", "average_distance")
-    .withColumnRenamed("count", "#")
-)
+grouped = grouped.orderBy('#', ascending=False)
 
 grouped.show(21)
 

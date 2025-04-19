@@ -56,6 +56,7 @@ df_income = df_income.withColumn(
 # ======================================
 
 joined_data = df_income.join(df_census, 'Zip Code', 'inner')
+joined_data.explain()
 
 median_inc_person = joined_data.withColumn('Median_Income', (col('Estimated Median Income')*col('Total Households'))/col('Total Population'))
 
