@@ -1,5 +1,7 @@
 # Big Data Management - Academic Year 2024-2025
 
+Corresponding README in greek can be found [here](https://github.com/manouslinard/bigdata-ntuamsc/blob/main/README_GR.md).
+
 ## Project Description
 
 This repository contains the implementation of the semester project for the "Big Data Management" course of the MSc in Data Science and Machine Learning at NTUA. The project involves analyzing datasets related to crimes in Los Angeles, using Apache Hadoop and Apache Spark.
